@@ -23,6 +23,10 @@ const ApiKit = {
       const url = "users/me";
       return client.get(url);
     },
+    getUsers: (params) => {
+      const url = "/users";
+      return client.get(url, { params });
+    },
   },
 };
 
