@@ -6,8 +6,7 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { Button, Card, Input, Tooltip } from "antd";
-import { Info } from "lucide-react";
+import { Button, Card, Input } from "antd";
 import Link from "next/link";
 
 import { toast } from "sonner";
@@ -28,8 +27,8 @@ export default function LoginPage() {
 
   const formik = useFormik({
     initialValues: {
-      username: "sakibul_islam",
-      password: "Sakib@123",
+      username: "",
+      password: "",
     },
     validationSchema: Yup.object({
       username: Yup.string().required("username is required"),
