@@ -28,8 +28,8 @@ export default function LoginPage() {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
+      username: "sakibul_islam",
+      password: "Sakib@123",
     },
     validationSchema: Yup.object({
       username: Yup.string().required("username is required"),
@@ -114,7 +114,7 @@ export default function LoginPage() {
               <div className="text-center">
                 Don&apos;t have an account?{" "}
                 <Link href="/register">
-                  <Button type="link" className="p-0">
+                  <Button type="link" className="!p-0">
                     Register
                   </Button>
                 </Link>

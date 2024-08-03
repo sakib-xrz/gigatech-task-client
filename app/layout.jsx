@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
                 controlHeight: 38,
                 controlHeightLG: 44,
                 controlHeightSM: 32,
+                colorPrimary: "#1890ff",
               },
             }}
           >

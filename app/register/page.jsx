@@ -141,7 +141,7 @@ export default function RegisterPage() {
               <div className="text-center">
                 Already have an account?{" "}
                 <Link href="/login">
-                  <Button type="link" className="p-0">
+                  <Button type="link" className="!p-0">
                     Login
                   </Button>
                 </Link>
