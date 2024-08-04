@@ -9,7 +9,7 @@ export default function Label({ className, children, ...props }) {
       )}
       {...props}
     >
-      {children}
+      {children} {props.required && <span className="text-red-500">*</span>}
     </label>
   );
 }

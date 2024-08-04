@@ -48,6 +48,7 @@ export default function AudioTestPage() {
         audioTrackConstraints={{
           noiseSuppression: true,
           echoCancellation: true,
+          autoGainControl: true,
         }}
         downloadOnSavePress={false}
         downloadFileExtension="mp3"

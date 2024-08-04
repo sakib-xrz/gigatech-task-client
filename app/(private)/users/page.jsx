@@ -4,22 +4,57 @@
 import ApiKit from "@/common/ApiKit";
 import Label from "@/components/shared/Label";
 import Loading from "@/components/shared/Loading";
-import { generateQueryString, sanitizeParams } from "@/lib/utils";
+import {
+  combineDateTime,
+  generateQueryString,
+  sanitizeParams,
+} from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { Avatar, Button, Input, Table } from "antd";
+import {
+  Avatar,
+  Button,
+  DatePicker,
+  Input,
+  Modal,
+  Select,
+  Table,
+  TimePicker,
+} from "antd";
+const { TextArea } = Input;
 const { Column } = Table;
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import format from "date-fns/format";
+import { useFormik } from "formik";
 
 export default function UsersPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchKey, setSearchKey] = useState(searchParams.get("search") || "");
   const [params, setParams] = useState({
     search: searchParams.get("search") || "",
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      date: "",
+      time: "",
+      participant: "",
+    },
+    onSubmit: (values) => {
+      const payload = {
+        title: values.title,
+        description: values.description,
+        dateTime: combineDateTime(values.date, values.time),
+        participant: values.participant,
+      };
+      console.log(payload);
+    },
   });
 
   const debouncedSearch = useDebouncedCallback((value) => {
@@ -54,13 +89,17 @@ export default function UsersPage() {
 
   const count = data?.meta?.count;
   const users = data?.data?.users;
-  console.log(users, count);
 
   const dataSource = users?.map((user) => ({
     key: user?._id,
     name: user.name,
     username: user.username,
     createdAt: user.createdAt,
+  }));
+
+  const options = users?.map((user) => ({
+    label: user.name,
+    value: user._id,
   }));
 
   return (
@@ -156,13 +195,85 @@ export default function UsersPage() {
             key="action"
             render={(_, record) => (
               <div className="text-center">
-                <Button>Schedule an Appointment</Button>
+                <Button onClick={() => setIsModalOpen(true)}>
+                  Schedule an Appointment
+                </Button>
               </div>
             )}
             responsive={["sm"]}
           />
         </Table>
       </div>
+
+      <Modal
+        title="Schedule an Appointment"
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        centered
+        footer={() => (
+          <div>
+            <Button type="primary" onClick={formik.handleSubmit}>
+              Schedule Appointment
+            </Button>
+          </div>
+        )}
+        maskClosable={false}
+      >
+        <form className="space-y-2">
+          <div className="space-y-1">
+            <Label required>Appointment Title</Label>
+            <Input
+              type="text"
+              name="title"
+              {...formik.getFieldProps("title")}
+            />
+          </div>
+          <div className="space-y-1">
+            <Label>Description</Label>
+            <TextArea
+              name="description"
+              {...formik.getFieldProps("description")}
+              rows={4}
+            />
+          </div>
+
+          <div className="flex max-md:flex-col md:items-center md:gap-5">
+            <div className="flex w-full flex-col gap-1">
+              <Label required>Date</Label>
+              <DatePicker
+                onChange={(_, dateString) => {
+                  formik.setFieldValue("date", dateString);
+                }}
+              />
+            </div>
+            <div className="flex w-full flex-col gap-1">
+              <Label required>Time</Label>
+              <TimePicker
+                use12Hours
+                format="h:mm a"
+                onChange={(_, timeString) => {
+                  formik.setFieldValue("time", timeString);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <Label required>Participant</Label>
+            <Select
+              showSearch
+              allowClear
+              placeholder="Select a participant"
+              optionFilterProp="label"
+              onChange={(value) => {
+                formik.setFieldValue("participant", value);
+              }}
+              options={options}
+              className="w-full"
+            />
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }
