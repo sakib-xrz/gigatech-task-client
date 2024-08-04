@@ -28,6 +28,17 @@ const ApiKit = {
       return client.get(url, { params });
     },
   },
+
+  appointment: {
+    getAppointments: (params) => {
+      const url = "/appointments";
+      return client.get(url, { params });
+    },
+    createAppointment: (payload) => {
+      const url = "/appointments";
+      return client.post(url, payload);
+    },
+  },
 };
 
 export default ApiKit;

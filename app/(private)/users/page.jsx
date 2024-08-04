@@ -26,35 +26,22 @@ import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import format from "date-fns/format";
 import { useFormik } from "formik";
+import SendVoice from "./_components/SendVoice";
+import { uploadAudio } from "@/lib/uploadAudio";
+import { toast } from "sonner";
+import moment from "moment";
 
 export default function UsersPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState("");
+  const [blob, setBlob] = useState(null);
   const [searchKey, setSearchKey] = useState(searchParams.get("search") || "");
   const [params, setParams] = useState({
     search: searchParams.get("search") || "",
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      title: "",
-      description: "",
-      date: "",
-      time: "",
-      participant: "",
-    },
-    onSubmit: (values) => {
-      const payload = {
-        title: values.title,
-        description: values.description,
-        dateTime: combineDateTime(values.date, values.time),
-        participant: values.participant,
-      };
-      console.log(payload);
-    },
   });
 
   const debouncedSearch = useDebouncedCallback((value) => {
@@ -79,6 +66,66 @@ export default function UsersPage() {
       ApiKit.user.getUsers(sanitizeParams(params)).then((res) => res),
   });
 
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      date: "",
+      time: "",
+      participant: "",
+    },
+    onSubmit: async (values) => {
+      setLoading(true);
+      let payload = {
+        title: values.title,
+        description: values.description,
+        dateTime: combineDateTime(values.date, values.time),
+        participant: values.participant,
+      };
+      if (blob) {
+        const audioMessage = await uploadAudio(blob);
+        payload = {
+          ...payload,
+          audioMessage,
+        };
+
+        await ApiKit.appointment
+          .createAppointment(payload)
+          .then(() => {
+            setIsModalOpen(false);
+            setBlob(null);
+            refetch();
+            toast.success("Appointment scheduled successfully");
+          })
+          .catch(() => {
+            toast.error("Failed to schedule an appointment");
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      } else {
+        payload = {
+          ...payload,
+          audioMessage: "",
+        };
+
+        await ApiKit.appointment
+          .createAppointment(payload)
+          .then(() => {
+            setIsModalOpen(false);
+            refetch();
+            toast.success("Appointment scheduled successfully");
+          })
+          .catch(() => {
+            toast.error("Failed to schedule an appointment");
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }
+    },
+  });
+
   useEffect(() => {
     refetch();
   }, [params]);
@@ -97,10 +144,10 @@ export default function UsersPage() {
     createdAt: user.createdAt,
   }));
 
-  const options = users?.map((user) => ({
-    label: user.name,
-    value: user._id,
-  }));
+  // const options = users?.map((user) => ({
+  //   label: user.name,
+  //   value: user._id,
+  // }));
 
   return (
     <div className="space-y-5">
@@ -187,7 +234,7 @@ export default function UsersPage() {
             title="Joining Date"
             dataIndex="createdAt"
             key="createdAt"
-            render={(createdAt) => <>{format(createdAt, "PP")}</>}
+            render={(createdAt) => <>{moment(createdAt).format("LL")}</>}
             responsive={["lg"]}
           />
           <Column
@@ -195,9 +242,18 @@ export default function UsersPage() {
             key="action"
             render={(_, record) => (
               <div className="text-center">
-                <Button onClick={() => setIsModalOpen(true)}>
-                  Schedule an Appointment
-                </Button>
+                {!record?.hasPendingAppointment ? (
+                  <Button
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      formik.setFieldValue("participant", record.key);
+                    }}
+                  >
+                    Schedule an Appointment
+                  </Button>
+                ) : (
+                  <Button danger>Cancel Appointment</Button>
+                )}
               </div>
             )}
             responsive={["sm"]}
@@ -208,11 +264,21 @@ export default function UsersPage() {
       <Modal
         title="Schedule an Appointment"
         open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => {
+          setIsModalOpen(false);
+          setLoading(false);
+          formik.resetForm();
+          setUrl("");
+          setBlob(null);
+        }}
         centered
         footer={() => (
           <div>
-            <Button type="primary" onClick={formik.handleSubmit}>
+            <Button
+              type="primary"
+              onClick={formik.handleSubmit}
+              loading={loading}
+            >
               Schedule Appointment
             </Button>
           </div>
@@ -237,10 +303,15 @@ export default function UsersPage() {
             />
           </div>
 
-          <div className="flex max-md:flex-col md:items-center md:gap-5">
+          <div className="flex gap-2 max-md:flex-col md:items-center md:gap-5">
             <div className="flex w-full flex-col gap-1">
               <Label required>Date</Label>
               <DatePicker
+                value={
+                  formik.values.date
+                    ? moment(formik.values.date, "YYYY-MM-DD")
+                    : null
+                }
                 onChange={(_, dateString) => {
                   formik.setFieldValue("date", dateString);
                 }}
@@ -249,8 +320,13 @@ export default function UsersPage() {
             <div className="flex w-full flex-col gap-1">
               <Label required>Time</Label>
               <TimePicker
+                value={
+                  formik.values.time
+                    ? moment(formik.values.time, "h:mm A")
+                    : null
+                }
                 use12Hours
-                format="h:mm a"
+                format="h:mm A"
                 onChange={(_, timeString) => {
                   formik.setFieldValue("time", timeString);
                 }}
@@ -258,7 +334,7 @@ export default function UsersPage() {
             </div>
           </div>
 
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <Label required>Participant</Label>
             <Select
               showSearch
@@ -271,7 +347,9 @@ export default function UsersPage() {
               options={options}
               className="w-full"
             />
-          </div>
+          </div> */}
+
+          <SendVoice setBlob={setBlob} url={url} setUrl={setUrl} />
         </form>
       </Modal>
     </div>

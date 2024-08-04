@@ -1,0 +1,95 @@
+.audio-recorder {
+  display: flex !important;
+  gap: 8px !important;
+  flex-direction: row-reverse !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border: 1px solid #d9d9d9 !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 7px 11px !important;
+  color: rgba(0, 0, 0, 0.88) !important;
+  font-size: 14px !important;
+  line-height: 1.5714285714285714 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  position: relative !important;
+  border-radius: 6px !important;
+  transition: all 0.2s !important;
+  height: 38px !important;
+}
+
+.audio-recorder:focus,
+.audio-recorder:hover {
+  border-color: #40a9ff !important;
+  outline: 0 !important;
+}
+
+.audio-recorder[disabled] {
+  background-color: #f5f5f5 !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+  border-color: #d9d9d9 !important;
+  cursor: not-allowed !important;
+}
+
+.audio-recorder img {
+  width: 22px !important;
+  height: 22px !important;
+  margin-right: 8px !important;
+  padding: 0 !important;
+}
+
+audio {
+  box-shadow: none !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border: 1px solid #d9d9d9 !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0px 5px !important;
+  color: rgba(0, 0, 0, 0.88) !important;
+  font-size: 14px !important;
+  line-height: 1.5714285714285714 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  position: relative !important;
+  border-radius: 6px !important;
+  transition: all 0.2s !important;
+  height: 38px !important;
+  display: block !important; /* Ensure it takes up the full width */
+}
+
+audio::-webkit-media-controls-panel {
+  background: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-volume-slider {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+audio::-webkit-media-controls-mute-button {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+audio::-webkit-media-controls-time-remaining-display {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+audio::-webkit-media-controls-current-time-display {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+audio::-webkit-media-controls-volume-control {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+audio::-webkit-media-controls-seek-back-button,
+audio::-webkit-media-controls-seek-forward-button {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
