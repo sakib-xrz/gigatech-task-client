@@ -31,8 +31,10 @@ import SendVoice from "./_components/SendVoice";
 import { uploadAudio } from "@/lib/uploadAudio";
 import { toast } from "sonner";
 import moment from "moment";
+import useStore from "@/store";
 
 export default function UsersPage() {
+  const { user } = useStore();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -142,6 +144,9 @@ export default function UsersPage() {
     name: user.name,
     username: user.username,
     createdAt: user.createdAt,
+    hasPendingAppointment: user.hasPendingAppointment,
+    scheduler: user.scheduler,
+    appointmentId: user.appointmentId,
   }));
 
   // const options = users?.map((user) => ({
@@ -200,10 +205,53 @@ export default function UsersPage() {
                   </div>
                 </div>
 
+                <div>
+                  <p className="mt-2 text-sm">
+                    Joined on {moment(record.createdAt).format("LL")}
+                  </p>
+                </div>
+
                 <div className="mt-4">
-                  <Button className="max-xs:w-full">
-                    Schedule an Appointment
-                  </Button>
+                  <div className="text-center">
+                    {!record?.hasPendingAppointment ? (
+                      <div className="flex items-center justify-center gap-2 xs:justify-start sm:justify-center">
+                        <Button
+                          size="small"
+                          className="max-xs:w-full"
+                          onClick={() => {
+                            setIsModalOpen(true);
+                            formik.setFieldValue("participant", record.key);
+                          }}
+                        >
+                          Schedule an Appointment
+                        </Button>
+                      </div>
+                    ) : record?.scheduler === user._id ? (
+                      <div className="flex items-center justify-center gap-2 xs:justify-start sm:justify-center">
+                        <Button size="small" danger>
+                          Cancel Appointment
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center gap-2 xs:justify-start sm:justify-center">
+                        <Button
+                          size="small"
+                          type="primary"
+                          className="max-xs:w-full"
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          size="small"
+                          type="primary"
+                          danger
+                          className="max-xs:w-full"
+                        >
+                          Decline
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </React.Fragment>
             )}
@@ -240,22 +288,31 @@ export default function UsersPage() {
           <Column
             title={() => <p className="text-center">Action</p>}
             key="action"
-            render={(_, record) => (
-              <div className="text-center">
-                {!record?.hasPendingAppointment ? (
-                  <Button
-                    onClick={() => {
-                      setIsModalOpen(true);
-                      formik.setFieldValue("participant", record.key);
-                    }}
-                  >
-                    Schedule an Appointment
-                  </Button>
-                ) : (
-                  <Button danger>Cancel Appointment</Button>
-                )}
-              </div>
-            )}
+            render={(_, record) => {
+              return (
+                <div className="text-center">
+                  {!record?.hasPendingAppointment ? (
+                    <Button
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        formik.setFieldValue("participant", record.key);
+                      }}
+                    >
+                      Schedule an Appointment
+                    </Button>
+                  ) : record?.scheduler === user._id ? (
+                    <Button danger>Cancel Appointment</Button>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <Button type="primary">Accept</Button>
+                      <Button type="primary" danger>
+                        Decline
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              );
+            }}
             responsive={["sm"]}
           />
         </Table>
