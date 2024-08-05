@@ -149,6 +149,24 @@ export default function UsersPage() {
     appointmentId: user.appointmentId,
   }));
 
+  const handelCancelAppointment = (appointmentId) => {
+    const promise = ApiKit.appointment
+      .cancelAppointment(appointmentId)
+      .then(() => {
+        refetch();
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+
+    toast.promise(promise, {
+      loading: "Cancelling appointment...",
+      success: "Appointment cancelled successfully",
+      error: "Failed to cancel appointment",
+    });
+  };
+
   // const options = users?.map((user) => ({
   //   label: user.name,
   //   value: user._id,
@@ -228,7 +246,13 @@ export default function UsersPage() {
                       </div>
                     ) : record?.scheduler === user._id ? (
                       <div className="flex items-center justify-center gap-2 xs:justify-start sm:justify-center">
-                        <Button size="small" danger>
+                        <Button
+                          size="small"
+                          danger
+                          onClick={() =>
+                            handelCancelAppointment(record?.appointmentId)
+                          }
+                        >
                           Cancel Appointment
                         </Button>
                       </div>
@@ -301,7 +325,14 @@ export default function UsersPage() {
                       Schedule an Appointment
                     </Button>
                   ) : record?.scheduler === user._id ? (
-                    <Button danger>Cancel Appointment</Button>
+                    <Button
+                      danger
+                      onClick={() =>
+                        handelCancelAppointment(record?.appointmentId)
+                      }
+                    >
+                      Cancel Appointment
+                    </Button>
                   ) : (
                     <div className="flex items-center justify-center gap-2">
                       <Button type="primary">Accept</Button>

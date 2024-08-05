@@ -38,6 +38,10 @@ const ApiKit = {
       const url = "/appointments";
       return client.post(url, payload);
     },
+    cancelAppointment: (appointmentId) => {
+      const url = `/appointments/${appointmentId}/cancel`;
+      return client.delete(url);
+    },
   },
 };
 
