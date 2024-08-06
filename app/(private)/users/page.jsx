@@ -248,6 +248,7 @@ export default function UsersPage() {
                       <div className="flex items-center justify-center gap-2 xs:justify-start sm:justify-center">
                         <Button
                           size="small"
+                          className="max-xs:w-full"
                           danger
                           onClick={() =>
                             handelCancelAppointment(record?.appointmentId)

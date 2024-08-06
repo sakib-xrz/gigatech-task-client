@@ -10,5 +10,5 @@ export default function HomePage() {
   useEffect(() => {
     router.push("/users");
   }, []);
-  return <Loading fullscreen={true} />;
+  return <Loading  />;
 }

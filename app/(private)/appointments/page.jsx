@@ -80,19 +80,23 @@ export default function AppointmentsPage() {
 
   return (
     <div className="space-y-5">
-      <div className="flex max-sm:flex-col sm:items-center sm:justify-between">
+      <div className="flex gap-5 max-xs:flex-col xs:items-center xs:justify-between">
         <div>
           <h3 className="text-xl font-semibold md:text-3xl">Appointments</h3>
         </div>
         <div>
-          <Button type="primary" icon={<Plus className="size-5" />}>
+          <Button
+            type="primary"
+            className="max-xs:w-full"
+            icon={<Plus className="size-5" />}
+          >
             Book an Appointment
           </Button>
         </div>
       </div>
 
-      <div>
-        <div className="space-y-1">
+      <div className="flex gap-3 max-md:flex-col md:items-center">
+        <div className="w-full space-y-1 md:w-6/12">
           <Label>Search user</Label>
           <Input
             type="text"
@@ -114,41 +118,40 @@ export default function AppointmentsPage() {
           />
         </div>
 
-        <div className="space-y-1">
-          <Label>Filter by status</Label>
-          <Select
-            allowClear
-            placeholder="Select status"
-            optionFilterProp="label"
-            onChange={(value) => {
-              setParams((prevParams) => ({
-                ...prevParams,
-                status: value,
-              }));
-            }}
-            options={statusOptions}
-            className="w-full"
-          />
-        </div>
+        <div className="flex w-full items-center gap-3 md:w-6/12">
+          <div className="w-full space-y-1">
+            <Label>Filter by status</Label>
+            <Select
+              allowClear
+              placeholder="Select status"
+              optionFilterProp="label"
+              onChange={(value) => {
+                setParams((prevParams) => ({
+                  ...prevParams,
+                  status: value,
+                }));
+              }}
+              options={statusOptions}
+              className="w-full"
+            />
+          </div>
 
-        <div className="space-y-1">
-          <Label>
-            Filter by date
-            <span className="text-xs text-gray-500"> (past / upcoming)</span>
-          </Label>
-          <Select
-            allowClear
-            placeholder="Select status"
-            optionFilterProp="label"
-            onChange={(value) => {
-              setParams((prevParams) => ({
-                ...prevParams,
-                date_filter: value,
-              }));
-            }}
-            options={dateOptions}
-            className="w-full"
-          />
+          <div className="w-full space-y-1">
+            <Label>Past / Upcoming</Label>
+            <Select
+              allowClear
+              placeholder="Select status"
+              optionFilterProp="label"
+              onChange={(value) => {
+                setParams((prevParams) => ({
+                  ...prevParams,
+                  date_filter: value,
+                }));
+              }}
+              options={dateOptions}
+              className="w-full"
+            />
+          </div>
         </div>
       </div>
 
