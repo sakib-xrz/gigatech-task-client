@@ -50,6 +50,10 @@ const ApiKit = {
       const url = `/appointments/${appointmentId}/decline`;
       return client.patch(url);
     },
+    updateAppointment: (appointmentId, payload) => {
+      const url = `/appointments/${appointmentId}`;
+      return client.patch(url, payload);
+    },
   },
 };
 
