@@ -362,7 +362,6 @@ export default function AppointmentDetails() {
                   : null
               }
               onChange={(_, dateString) => {
-                console.log(dateString);
                 formik.setFieldValue("date", dateString);
               }}
             />

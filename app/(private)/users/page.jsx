@@ -259,16 +259,13 @@ export default function UsersPage() {
                           size="small"
                           type="primary"
                           className="max-xs:w-full"
+                          onClick={() => {
+                            router.push(
+                              `/appointments/${record.appointmentId}?type=${record.scheduler === user._id ? "scheduler" : "participant"}`,
+                            );
+                          }}
                         >
-                          Accept
-                        </Button>
-                        <Button
-                          size="small"
-                          type="primary"
-                          danger
-                          className="max-xs:w-full"
-                        >
-                          Decline
+                          View Appointment
                         </Button>
                       </div>
                     )}
@@ -331,12 +328,16 @@ export default function UsersPage() {
                       Cancel Appointment
                     </Button>
                   ) : (
-                    <div className="flex items-center justify-center gap-2">
-                      <Button type="primary">Accept</Button>
-                      <Button type="primary" danger>
-                        Decline
-                      </Button>
-                    </div>
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        router.push(
+                          `/appointments/${record.appointmentId}?type=${record.scheduler === user._id ? "scheduler" : "participant"}`,
+                        );
+                      }}
+                    >
+                      View Appointment
+                    </Button>
                   )}
                 </div>
               );

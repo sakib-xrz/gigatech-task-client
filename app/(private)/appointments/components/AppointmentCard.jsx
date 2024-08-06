@@ -302,7 +302,6 @@ export default function AppointmentCard({ appointment, type, refetch }) {
                   : null
               }
               onChange={(_, dateString) => {
-                console.log(dateString);
                 formik.setFieldValue("date", dateString);
               }}
             />
