@@ -109,7 +109,9 @@ export default function AppointmentCard({ appointment, type, refetch }) {
   return (
     <>
       <Card
-        onClick={() => router.push(`/appointments/${appointment?._id}`)}
+        onClick={() =>
+          router.push(`/appointments/${appointment?._id}?type=${type}`)
+        }
         className={`mt-8 w-full cursor-pointer rounded-lg !border shadow
       ${appointment.status === "accepted" ? "!border-green-500 !bg-green-50" : appointment.status === "declined" ? "!border-red-500 !bg-red-50" : "!border-gray-300"}
     `}
@@ -137,23 +139,21 @@ export default function AppointmentCard({ appointment, type, refetch }) {
                 </div>
               </>
             ) : (
-              <h4 className="text-sm font-semibold text-gray-900">
-                <>
-                  <div className="flex items-center gap-2">
-                    <div className="max-sm:hidden">
-                      <Avatar
-                        src={`https://ui-avatars.com/api/?name=${appointment?.scheduler?.name}&background=random`}
-                      />
-                    </div>
-                    <div>
-                      <small className="text-gray-500 ">APPOINTMENT WITH</small>
-                      <h4 className="font-semibold leading-none text-gray-900">
-                        {appointment?.scheduler?.name}
-                      </h4>
-                    </div>
+              <>
+                <div className="flex items-center gap-2">
+                  <div className="max-sm:hidden">
+                    <Avatar
+                      src={`https://ui-avatars.com/api/?name=${appointment?.scheduler?.name}&background=random`}
+                    />
                   </div>
-                </>
-              </h4>
+                  <div>
+                    <small className="text-gray-500 ">APPOINTMENT WITH</small>
+                    <h4 className="font-semibold leading-none text-gray-900">
+                      {appointment?.scheduler?.name}
+                    </h4>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -207,7 +207,10 @@ export default function AppointmentCard({ appointment, type, refetch }) {
                 <Button
                   type="primary"
                   className="w-full xs:w-1/2"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsModalOpen(true);
+                  }}
                 >
                   Reschedule
                 </Button>
@@ -215,7 +218,10 @@ export default function AppointmentCard({ appointment, type, refetch }) {
                   type="primary"
                   className="w-full xs:w-1/2"
                   danger
-                  onClick={() => handelCancelAppointment(appointment?._id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handelCancelAppointment(appointment?._id);
+                  }}
                 >
                   Cancel
                 </Button>
@@ -241,7 +247,10 @@ export default function AppointmentCard({ appointment, type, refetch }) {
               <Button
                 type="primary"
                 className="w-full xs:w-1/2"
-                onClick={() => handelAcceptAppointment(appointment?._id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handelAcceptAppointment(appointment?._id);
+                }}
               >
                 Accept
               </Button>
@@ -249,7 +258,10 @@ export default function AppointmentCard({ appointment, type, refetch }) {
                 type="primary"
                 className="w-full xs:w-1/2"
                 danger
-                onClick={() => handelDeclineAppointment(appointment?._id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handelDeclineAppointment(appointment?._id);
+                }}
               >
                 Decline
               </Button>

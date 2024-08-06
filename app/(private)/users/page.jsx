@@ -169,6 +169,7 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-5">
+      <title>APPOINTEASE | USERS</title>
       <div className="flex max-sm:flex-col sm:items-center sm:justify-between">
         <div>
           <h3 className="text-xl font-semibold md:text-3xl">Users</h3>

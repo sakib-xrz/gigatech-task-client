@@ -30,6 +30,7 @@ import SendVoice from "../users/_components/SendVoice";
 import { useFormik } from "formik";
 import moment from "moment";
 import { toast } from "sonner";
+import { uploadAudio } from "@/lib/uploadAudio";
 
 const statusOptions = [
   {
@@ -207,6 +208,7 @@ export default function AppointmentsPage() {
 
   return (
     <div className="space-y-5">
+      <title>APPOINTEASE | APPOINTMENTS</title>
       <div className="flex gap-5 max-xs:flex-col xs:items-center xs:justify-between">
         <div>
           <h3 className="text-xl font-semibold md:text-3xl">Appointments</h3>

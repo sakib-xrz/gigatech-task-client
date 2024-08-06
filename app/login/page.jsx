@@ -72,6 +72,7 @@ export default function LoginPage() {
 
   return (
     <Container className={"py-0 lg:py-0"}>
+      <title>APPOINTEASE | LOGIN</title>
       <div className="flex min-h-screen w-auto items-center justify-center">
         <Card className="w-full max-w-sm shadow">
           <div className="space-y-3">

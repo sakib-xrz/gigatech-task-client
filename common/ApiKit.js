@@ -34,6 +34,10 @@ const ApiKit = {
       const url = "/appointments";
       return client.get(url, { params });
     },
+    getAppointment: (appointmentId) => {
+      const url = `/appointments/${appointmentId}`;
+      return client.get(url);
+    },
     createAppointment: (payload) => {
       const url = "/appointments";
       return client.post(url, payload);
