@@ -167,11 +167,6 @@ export default function UsersPage() {
     });
   };
 
-  // const options = users?.map((user) => ({
-  //   label: user.name,
-  //   value: user._id,
-  // }));
-
   return (
     <div className="space-y-5">
       <div className="flex max-sm:flex-col sm:items-center sm:justify-between">
@@ -201,7 +196,7 @@ export default function UsersPage() {
         </div>
       </div>
 
-      <p className=" text-sm">
+      <p className="text-sm">
         {count} {count > 1 ? "users" : "user"} found
       </p>
 

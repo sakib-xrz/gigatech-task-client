@@ -42,6 +42,14 @@ const ApiKit = {
       const url = `/appointments/${appointmentId}/cancel`;
       return client.delete(url);
     },
+    acceptAppointment: (appointmentId) => {
+      const url = `/appointments/${appointmentId}/accept`;
+      return client.patch(url);
+    },
+    declineAppointment: (appointmentId) => {
+      const url = `/appointments/${appointmentId}/decline`;
+      return client.patch(url);
+    },
   },
 };
 

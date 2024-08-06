@@ -35,7 +35,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="border-border sticky top-0 z-50 border-b">
+    <div className="border-border sticky top-0 z-50 border-b bg-white">
       <div className="mx-auto flex h-20 w-full max-w-[1400px] items-center justify-between px-2">
         <Link href={"/users"} className="h-14">
           <Image
