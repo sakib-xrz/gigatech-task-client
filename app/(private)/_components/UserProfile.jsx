@@ -10,18 +10,8 @@ export default function UserProfile() {
   const pathname = usePathname();
   const { user } = useStore();
 
-  let selectedKey;
-  switch (pathname) {
-    case "/users":
-      selectedKey = "0";
-      break;
-    case "/appointments":
-      selectedKey = "1";
-      break;
-    default:
-      selectedKey = "0";
-      break;
-  }
+  const selectedKey =
+    pathname === "/users" ? "0" : pathname === "/appointments" ? "1" : "";
 
   return (
     <Dropdown menu={{ items, selectable: true, selectedKeys: [selectedKey] }}>

@@ -7,8 +7,10 @@ import { toast } from "sonner";
 import { useState } from "react";
 import Label from "@/components/shared/Label";
 import { combineDateTime } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function AppointmentCard({ appointment, type, refetch }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handelCancelAppointment = (appointmentId) => {
@@ -107,7 +109,8 @@ export default function AppointmentCard({ appointment, type, refetch }) {
   return (
     <>
       <Card
-        className={`mt-8 w-full rounded-lg !border shadow
+        onClick={() => router.push(`/appointments/${appointment?._id}`)}
+        className={`mt-8 w-full cursor-pointer rounded-lg !border shadow
       ${appointment.status === "accepted" ? "!border-green-500 !bg-green-50" : appointment.status === "declined" ? "!border-red-500 !bg-red-50" : "!border-gray-300"}
     `}
       >

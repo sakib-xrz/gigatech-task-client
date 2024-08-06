@@ -24,7 +24,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const selectedKey = pathname === "/appointments" ? "1" : "0";
+  const selectedKey =
+    pathname === "/users" ? "0" : pathname === "/appointments" ? "1" : "";
 
   const showDrawer = () => {
     setOpen(true);
