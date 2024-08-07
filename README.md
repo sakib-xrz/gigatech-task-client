@@ -69,6 +69,16 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/appointease-client:latest
 ```
 
+### How to Run the Project Locally
+
+1. Clone the repository: `https://github.com/sakib-xrz/gigatech-task-client`
+2. Go to the folder: `cd gigatech-task-client`
+3. Install dependencies: `npm install`
+4. Run the development server: `npm run dev`
+5. Project will run in 3000 port: `http://localhost:3000/`
+
+### [NOTE: `.env.local` file is already attached in the repo, so you don't need to create any `.env.local` file]
+
 ### Backend:
 
 - The backend server is built using **Express** and **Mongoose**.
