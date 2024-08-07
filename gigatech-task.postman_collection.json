@@ -1,0 +1,445 @@
+{
+	"info": {
+		"_postman_id": "f9bd5b51-3eeb-4302-a300-16e0eeb9366f",
+		"name": "Gigatech Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25329986"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_token\", pm.response.json().result.access);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"sakibul_islam\",\r\n    \"password\": \"Sakib@123\"\r\n}\r\n\r\n// {\r\n//     \"username\": \"muntasir_wahid\",\r\n//     \"password\": \"Muntasir@123\"\r\n// }\r\n\r\n// {\r\n//     \"username\": \"nusrat_jahan\",\r\n//     \"password\": \"Nusrat@123\"\r\n// }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_token\", pm.response.json().result.access);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Md Sakibul Islam\",\r\n    \"username\": \"sakibul_islam\",\r\n    \"password\": \"Sakib@123\"\r\n}\r\n\r\n// {\r\n//     \"name\": \"Md Muntasir Wahid\",\r\n//     \"username\": \"muntasir_wahid\",\r\n//     \"password\": \"Muntasir@123\"\r\n// }\r\n\r\n// {\r\n//     \"name\": \"Nusrat Jahan\",\r\n//     \"username\": \"nusrat_jahan\",\r\n//     \"password\": \"Nusrat@123\"\r\n// }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "get me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "muntasir",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "APPOINTMENT",
+			"item": [
+				{
+					"name": "get appointments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments?type=scheduler&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "scheduler",
+									"description": "Filter by type [\"scheduler\", \"participant\"]"
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by appointment title",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "",
+									"description": "Status by filter [\"pending\", \"accepted\", \"declined\"]",
+									"disabled": true
+								},
+								{
+									"key": "dateFilter",
+									"value": "",
+									"description": "Filter between upcoming and past appointments [\"upcoming\" , \"past\"]",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/66b10460cade5fb6219c10a0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"66b10460cade5fb6219c10a0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Discuss about Movmonkey project\", // required\r\n    \"description\": \"\",\r\n    \"dateTime\": \"2024-08-10T03:00:00.000Z\", // required\r\n    \"audioMessage\": \"\",\r\n    \"participant\": \"66af98f498629a0a1f654b40\" // required\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/appointmentId/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"appointmentId",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/appointmentId/accept",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"appointmentId",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "decline appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/appointmentId/decline",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"appointmentId",
+								"decline"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update appointment",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"\", \r\n    \"description\": \"\",\r\n    \"dateTime\": \"\", \r\n    \"audioMessage\": \"\",\r\n    \"participant\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/appointments/appointmentId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"appointmentId"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
