@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# APPOINTEASE
 
-## Getting Started
+Live Website: [https://appointease-client.onrender.com](https://appointease-client.onrender.com)
 
-First, run the development server:
+### Overview
+APPOINTEASE is a comprehensive appointment scheduling application developed using Next.js, designed to simplify the process of managing appointments. This application caters to users who need to schedule, manage, and organize their appointments efficiently.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Features
+__1. User Registration and Login:__ 
+- Secure user registration and login functionality.
+- Authentication using username and password.
+
+__2. User Interaction:__ 
+- View and search functionality to find other users.
+- Ability to schedule appointments with a specific user.
+
+__3. Appointment Management:__ 
+- Ability to schedule appointments with any users.
+- Search and filter options to manage appointments.
+- Differentiation between upcoming and past appointments.
+- Capability to cancel appointments before the scheduled time.
+- Capability to reschedule appointments.
+- Options for appointment holders to accept or decline appointments.
+- Inclusion of recorded audio messages with appointments for added context.
+
+### Technical Specifications:
+- **Next.js** (as a frontend framework)
+- **Ant Design** (as a component library)
+- **Zustand** (for state management)
+- **React Query** (for better caching and revalidation)
+- **Axios** (for handling HTTP requests)
+- **Formik** (for form handling)
+- **Yup** (for form validation)
+- **Tailwind CSS** (as a CSS framework)
+
+### Additional Features:
+- **Docker**: The frontend application is containerized using Docker.
+- **GitHub Actions**: Continuous integration and deployment using GitHub Actions with the following workflow:
+
+```
+name: Build and Push Docker image to Docker Hub
+
+on: push
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/appointease-client:latest
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Backend:
+- The backend server is built using **Express** and **Mongoose**.
+- Backend repository: [GitHub Link](https://github.com/sakib-xrz/gigatech-task-server)
+- Backend hosted link: [https://appointease-server.vercel.app/](https://appointease-server.vercel.app/)
+- Postman collection: <a href="./gigatech-task.postman_collection.json" download>Click here to download</a>
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
