@@ -189,13 +189,13 @@ export default function AppointmentDetails() {
             <div className="flex items-center gap-2">
               <div>
                 <Avatar
-                  src={`https://ui-avatars.com/api/?name=${appointment?.participant?.name}&background=random`}
+                  src={`https://ui-avatars.com/api/?name=${appointment?.scheduler?.name}&background=random`}
                 />
               </div>
               <div>
                 <small className="text-gray-500 ">SCHEDULER</small>
                 <h4 className="font-semibold leading-none text-gray-900">
-                  {appointment?.participant?.name}
+                  {appointment?.scheduler?.name}
                 </h4>
               </div>
             </div>
@@ -203,13 +203,13 @@ export default function AppointmentDetails() {
             <div className="flex items-center gap-2">
               <div>
                 <Avatar
-                  src={`https://ui-avatars.com/api/?name=${appointment?.scheduler?.name}&background=random`}
+                  src={`https://ui-avatars.com/api/?name=${appointment?.participant?.name}&background=random`}
                 />
               </div>
               <div>
                 <small className="text-gray-500 ">PARTICIPANT</small>
                 <h4 className="font-semibold leading-none text-gray-900">
-                  {appointment?.scheduler?.name}
+                  {appointment?.participant?.name}
                 </h4>
               </div>
             </div>
