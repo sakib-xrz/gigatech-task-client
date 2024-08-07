@@ -3,18 +3,23 @@
 Live Website: [https://appointease-client.onrender.com](https://appointease-client.onrender.com)
 
 ### Overview
+
 APPOINTEASE is a comprehensive appointment scheduling application developed using Next.js, designed to simplify the process of managing appointments. This application caters to users who need to schedule, manage, and organize their appointments efficiently.
 
 ### Features
-__1. User Registration and Login:__ 
+
+**1. User Registration and Login:**
+
 - Secure user registration and login functionality.
 - Authentication using username and password.
 
-__2. User Interaction:__ 
+**2. User Interaction:**
+
 - View and search functionality to find other users.
 - Ability to schedule appointments with a specific user.
 
-__3. Appointment Management:__ 
+**3. Appointment Management:**
+
 - Ability to schedule appointments with any users.
 - Search and filter options to manage appointments.
 - Differentiation between upcoming and past appointments.
@@ -24,6 +29,7 @@ __3. Appointment Management:__
 - Inclusion of recorded audio messages with appointments for added context.
 
 ### Technical Specifications:
+
 - **Next.js** (as a frontend framework)
 - **Ant Design** (as a component library)
 - **Zustand** (for state management)
@@ -34,6 +40,7 @@ __3. Appointment Management:__
 - **Tailwind CSS** (as a CSS framework)
 
 ### Additional Features:
+
 - **Docker**: The frontend application is containerized using Docker.
 - **GitHub Actions**: Continuous integration and deployment using GitHub Actions with the following workflow:
 
@@ -63,9 +70,8 @@ jobs:
 ```
 
 ### Backend:
+
 - The backend server is built using **Express** and **Mongoose**.
 - Backend repository: [GitHub Link](https://github.com/sakib-xrz/gigatech-task-server)
 - Backend hosted link: [https://appointease-server.vercel.app/](https://appointease-server.vercel.app/)
-- Postman collection: <a href="./gigatech-task.postman_collection.json" download>Click here to download</a>
-
-
+- Postman collection: <a href="https://github.com/sakib-xrz/gigatech-task-client/blob/main/gigatech-task.postman_collection.json" download>Click here to download</a>
