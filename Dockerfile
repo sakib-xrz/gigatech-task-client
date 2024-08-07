@@ -12,6 +12,9 @@ RUN npm install
 # Build the app
 RUN npm run build
 
+# Copy ENV variables
+COPY .env.local .env.local
+
 # Expose the port
 EXPOSE 3000
 
