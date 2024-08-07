@@ -84,18 +84,30 @@ export default function Navbar() {
             selectedKeys={[selectedKey]}
           >
             <Item key={"0"}>
-              <Link href="/users" className="flex items-center gap-2">
+              <Link
+                onClick={() => setOpen(false)}
+                href="/users"
+                className="flex items-center gap-2"
+              >
                 <UsersRound className="size-5" /> Users
               </Link>
             </Item>
             <Item key={"1"}>
-              <Link href="/appointments" className="flex items-center gap-2">
+              <Link
+                onClick={() => setOpen(false)}
+                href="/appointments"
+                className="flex items-center gap-2"
+              >
                 <CalendarDays className="size-5" /> Appointments
               </Link>
             </Item>
           </AntdMenu>
 
-          <Link href="/logout" className="absolute bottom-6 right-6">
+          <Link
+            onClick={() => setOpen(false)}
+            href="/logout"
+            className="absolute bottom-6 right-6"
+          >
             <Button danger type="primary" className="flex items-center gap-2">
               <LogOut className="size-5" /> Logout
             </Button>

@@ -16,7 +16,7 @@ import {
 } from "antd";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import moment from "moment";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -25,6 +25,7 @@ import { combineDateTime, formatText } from "@/lib/utils";
 import { toast } from "sonner";
 
 export default function AppointmentDetails() {
+  const router = useRouter();
   const { id } = useParams();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
@@ -37,6 +38,7 @@ export default function AppointmentDetails() {
       .cancelAppointment(appointmentId)
       .then(() => {
         refetch();
+        router.push("/appointments");
       })
       .catch((error) => {
         console.log(error);
